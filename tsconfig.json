@@ -1,0 +1,15 @@
+{
+	"files": ["src/index.ts"],
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ESNext",
+		"esModuleInterop": true,
+		"moduleResolution": "Bundler",
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"outDir": "dist",
+		"declaration": true,
+		"declarationMap": true
+	}
+}
