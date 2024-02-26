@@ -1,7 +1,7 @@
 {
   "name": "zgpt",
   "author": "Ashwin Mahadevan",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -13,6 +13,11 @@
     "build": "tsc"
   },
   "devDependencies": {
+    "@types/node": "^20.11.20",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "openai": "^4.28.0",
+    "zod": "^3.22.4"
   }
 }
