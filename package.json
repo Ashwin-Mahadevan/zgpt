@@ -1,27 +1,36 @@
 {
-  "name": "zgpt",
-  "author": "Ashwin Mahadevan",
-  "version": "0.0.4",
-  "type": "module",
-  "files": [
-    "./dist"
-  ],
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
-  },
-  "scripts": {
-    "build": "tsc"
-  },
-  "dependencies": {
-    "openai": "^4.28.0",
-    "zod": "^3.22.4",
-    "zod-to-json-schema": "^3.22.4"
-  },
-  "devDependencies": {
-    "typescript": "^5.3.3"
-  }
+	"name": "zgpt",
+	"author": "Ashwin Mahadevan",
+	"version": "0.0.4",
+	"type": "module",
+	"files": [
+		"./dist"
+	],
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc",
+		"check": "eslint src",
+		"clean": "rm -rf dist",
+		"format": "prettier --write src",
+		"prepublish": "pnpm clean && pnpm build"
+	},
+	"dependencies": {
+		"openai": "^4.28.0",
+		"zod": "^3.22.4",
+		"zod-to-json-schema": "^3.22.4"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^7.1.0",
+		"@typescript-eslint/parser": "^7.1.0",
+		"eslint": "^8.57.0",
+		"prettier": "^3.2.5",
+		"prettier-plugin-organize-imports": "^3.2.4",
+		"typescript": "^5.3.3"
+	}
 }
