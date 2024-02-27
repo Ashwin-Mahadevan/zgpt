@@ -8,10 +8,7 @@ A lightweight Typescript library for calling Large Language Models (LLMs) with t
 const exampleMessage = await zgpt.chat({
 	messages: [
 		{ role: "system", content: "You are a sentiment classifier." },
-		{
-			role: "system",
-			content: "Classify the sentiment of the user's messages.",
-		},
+		{ role: "system", content: "Classify the user's messages." },
 		{ role: "user", content: "I love zGPT!" },
 	],
 
