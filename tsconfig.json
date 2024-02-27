@@ -3,12 +3,14 @@
 	"compilerOptions": {
 		"module": "ESNext",
 		"target": "ESNext",
-		"esModuleInterop": true,
 		"moduleResolution": "Bundler",
+
+		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"skipLibCheck": true,
-		"strict": true,
+
 		"outDir": "dist",
+		"sourceMap": true,
 		"declaration": true,
 		"declarationMap": true
 	}
