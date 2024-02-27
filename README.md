@@ -2,24 +2,24 @@
 
 A lightweight Typescript library for calling Large Language Models (LLMs) with type-safety.
 
-```
-import { zgpt } from "zgpt";
+## Example
 
-const message = zgpt({
+```
+const response = await zgpt.chat({
     messages: [
-        { role: "system", content: "You are a sentiment analyzer Classify each sentence from the user." },
-        { role: "user", content: "I love zGPT!" },
+        {role: "system", content: "You are a sentiment classifier. Classify the sentiment of the user's messages."},
+        {role: "user", content: "I love zGPT!" },
     ],
+
     tool: {
-            name: "classify-sentiment",
-            description: "Classifies a sentence as positive or negative.",
-            schema: z.object({ sentence: z.string(), sentiment: z.enum(["positive", "negative"]) })
-    },
+        name: "classify-sentiment",
+        description: "Records the sentiment of a user's message."
+        schema: z.object({
+            message: z.string().describe("The user's message"),
+            sentiment: z.enum(["positive", "negative"]).describe("The sentiment of the user's message.")
+        })
+    }
 })
 
-typeof message  // {
-                //      role: "assistant",
-                //      content: null,
-                //      calls: { id: string; arguments: { sentence: string; sentiment: "positive" | "negative" } }[]
-                // }
+// typeof response = { role: "assistant"; content: string | null; calls: { message: string; sentiment: "positive" | "negative"; }; };
 ```
