@@ -1,6 +1,12 @@
 import { OpenAI } from "openai";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { z } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
+
+function zodToOpenAISchema<T extends z.ZodType>(schema: T) {
+  const { $schema, ...json } = zodToJsonSchema(schema);
+  return json;
+}
 
 type ChatOptions = {
   messages: Array<ChatCompletionMessageParam>;
@@ -46,7 +52,7 @@ export class ZGPT {
     options: ChatOptions | ChatOptionsWithTool<z.ZodType>
   ): Promise<ResponseMessage | ResponseMessageWithCalls<z.ZodType>> {
     const completion = await this.openAI.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4-turbo-preview",
       messages: options.messages,
       tools:
         "tool" in options
@@ -56,7 +62,7 @@ export class ZGPT {
                 function: {
                   name: options.tool.name,
                   description: options.tool.description,
-                  parameters: { TODO: "TODO" },
+                  parameters: zodToOpenAISchema(options.tool.schema),
                 },
               },
             ]
@@ -80,7 +86,11 @@ export class ZGPT {
 
         return {
           id: call.id,
-          arguments: options.tool.schema.parse(call.function.arguments),
+          arguments: z
+            .string()
+            .transform((s) => JSON.parse(s))
+            .pipe(options.tool.schema)
+            .parse(call.function.arguments),
         };
       }),
     };
