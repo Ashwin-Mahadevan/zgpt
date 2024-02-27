@@ -18,7 +18,7 @@ const exampleMessage = await zgpt.chat({
         schema: z.object({
             message: z
                 .string()
-                .describe("The user's message"),
+                .describe("The user's message."),
             sentiment: z
                 .enum(["positive", "negative"])
                 .describe("The sentiment of the user's message.")
