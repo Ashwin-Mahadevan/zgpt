@@ -9,13 +9,19 @@ function zodToOpenAISchema<T extends z.ZodType>(schema: T) {
 }
 
 type ChatOptions = {
+  /** An array of messages in the conversation so-far. */
   messages: Array<ChatCompletionMessageParam>;
 };
 
 type ChatOptionsWithTool<TSchema extends z.ZodType> = ChatOptions & {
   tool: {
+    /** The name of the tool which the language model will be forced to call. */
     name: Exclude<string, "auto" | "none">;
-    description: string;
+
+    /** A description of the tool to the language model. */
+    description?: string;
+
+    /** A Zod schema to validate the arguments with which the language model calls the tool. */
     schema: TSchema;
   };
 };
@@ -32,7 +38,14 @@ type ResponseMessageWithCalls<TSchema extends z.ZodType> = ResponseMessage & {
 export class ZGPT {
   private openAI: OpenAI;
 
+  /**
+   * Creates a new ZGPT instance given an OpenAI API key.
+   */
   constructor(options: { key: string });
+
+  /**
+   * Creates a new ZGPT instance given an OpenAI instance.
+   */
   constructor(options: { openAI: OpenAI });
 
   constructor(options: { key: string } | { openAI: OpenAI }) {
@@ -42,8 +55,13 @@ export class ZGPT {
         : new OpenAI({ apiKey: options.key });
   }
 
+  /**
+   * Chat with the language model, expecting a text response.
+   */
   async chat(options: ChatOptions): Promise<ResponseMessage>;
 
+  /** Chat with the language model,
+   * forcing it to respond with JSON data validated by a zod schema.  */
   async chat<TSchema extends z.ZodType>(
     options: ChatOptionsWithTool<TSchema>
   ): Promise<ResponseMessageWithCalls<TSchema>>;
