@@ -4,11 +4,12 @@ A lightweight Typescript library for calling Large Language Models (LLMs) with t
 
 ## Example
 
-```
-const response = await zgpt.chat({
+```ts
+const exampleMessage = await zgpt.chat({
     messages: [
-        {role: "system", content: "You are a sentiment classifier. Classify the sentiment of the user's messages."},
-        {role: "user", content: "I love zGPT!" },
+        { role: "system", content: "You are a sentiment classifier." },
+        { role: "system", content: "Classify the sentiment of the user's messages." },
+        { role: "user", content: "I love zGPT!" },
     ],
 
     tool: {
@@ -21,5 +22,13 @@ const response = await zgpt.chat({
     }
 })
 
-// typeof response = { role: "assistant"; content: string | null; calls: { message: string; sentiment: "positive" | "negative"; }; };
+// Type returned by zgpt.chat above
+type ExampleMessage = {
+    role: "assistant";
+    content: string | null;
+    calls: {
+        message: string;
+        sentiment: "positive" | "negative";
+    };
+};
 ```
