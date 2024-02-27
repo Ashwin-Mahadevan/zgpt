@@ -41,7 +41,10 @@ export class ZGPT {
 	constructor(options: { openAI: OpenAI });
 
 	constructor(options: { key: string } | { openAI: OpenAI }) {
-		this.openAI = "openAI" in options ? options.openAI : new OpenAI({ apiKey: options.key });
+		this.openAI =
+			"openAI" in options
+				? options.openAI
+				: new OpenAI({ apiKey: options.key });
 	}
 
 	/**
@@ -78,7 +81,8 @@ export class ZGPT {
 
 		const message = completion.choices[0].message;
 
-		if (!("tool" in options)) return { role: message.role, content: message.content };
+		if (!("tool" in options))
+			return { role: message.role, content: message.content };
 
 		if (!message.tool_calls || message.tool_calls.length === 0)
 			throw new Error("Expected tool calls but none were found");
@@ -87,7 +91,8 @@ export class ZGPT {
 			role: message.role,
 			content: message.content,
 			calls: message.tool_calls?.map((call) => {
-				if (call.function.name !== options.tool.name) throw new Error("Unexpected tool call");
+				if (call.function.name !== options.tool.name)
+					throw new Error("Unexpected tool call");
 
 				return {
 					id: call.id,
