@@ -1,5 +1,5 @@
 import { OpenAI } from "openai";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
